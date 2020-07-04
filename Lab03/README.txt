@@ -1,0 +1,1 @@
+The practices are very interesting. I can learn about many ways to design the layout with Float in CSS.

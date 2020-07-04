@@ -97,7 +97,7 @@ p{
 
 .content p:nth-child(odd) img{
   margin-right: 5px;
- /* float: left; */
+  float: left; 
   overflow: auto;
 }
 

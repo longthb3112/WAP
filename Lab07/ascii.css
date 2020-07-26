@@ -1,0 +1,38 @@
+.container{
+    width: 960px;
+    margin: 0 auto;
+}
+body{
+   background-color: #CCCCFF;
+   font-family : sans-serif;
+   font-size: 14pt;
+   text-align: center;
+}
+header{
+	font-size: 32pt;
+	font-weight: bold;
+	margin: 0 auto;
+}
+#main-text{
+	width: 90%;
+	height: 400px;
+	font-size: 12pt;
+	font-family: monospace;
+	font-weight: bold;
+}	
+fieldset{
+	border: 5pt solid;
+	display: inline;
+	font-weight: bold;
+}
+fieldset legend{
+	text-align: left;
+}
+fieldset button,select{
+	font-weight: bold;
+	font-family : sans-serif;
+}
+footer{
+    right:0px;
+    position: fixed;
+}

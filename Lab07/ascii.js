@@ -17,21 +17,21 @@ window.onload = function(){
 
 const DEFAULT_INTERVAL = 250;
 const CUSTOM_INTERVAL = 50;
-var animationInterval = DEFAULT_INTERVAL;
-var startAnimationIntervalId = null;
-var text = null;
-var index = 0;
-var frames = null;
+let animationInterval = DEFAULT_INTERVAL;
+let startAnimationIntervalId = null;
+let text = null;
+let index = 0;
+let frames = null;
 
 function getItem(id){
 	return document.getElementById(id);
 }
 // Start button click
 function onStartBtnClick() {
-	var textarea = getItem("main-text");
+	let textarea = getItem("main-text");
 	text = textarea.value;
 	
-	var animation = getItem("animation");	
+	let animation = getItem("animation");	
 	frames = ANIMATIONS[animation.value].split("=====\n");
 	index = 0;
 	//disable buttons
@@ -52,7 +52,7 @@ function onStopBtnClick() {
 }
 //Change animation
 function animationChanged() {
-    var animationTxt = ANIMATIONS[getItem("animation").value];
+    let animationTxt = ANIMATIONS[getItem("animation").value];
     frames = animationTxt.split("=====\n");
     index = 0;
 }
@@ -67,7 +67,7 @@ function speedChanged() {
 }
 //Start interval
 function startAnimationInterval() {
-    var speed = getItem("turbo");
+    let speed = getItem("turbo");
 	startAnimationIntervalId = setInterval(function(){
 		if(index == frames.length) index = 0;
 		getItem("main-text").value = frames[index++];

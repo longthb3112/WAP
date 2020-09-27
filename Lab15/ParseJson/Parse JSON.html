@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="robots" content="noindex">
+    <title>Parse JSON</title>
+<script type="text/javascript">var _vss_declaration_promises = {}; 
+window.addEventListener("message", function (event) { 
+    if (event.source !== window) return; 
+if (event.data.src && (event.data.src === "background.js") && event.data.extension && (event.data.extension === "vss.extension.declaration")) { 
+        console.log("Page received: "); 
+        if (event.data.nonce) { 
+            var p = _vss_declaration_promises[event.data.nonce]; 
+            if (event.data.result === "ok") { 
+                if (event.data.signature !== undefined) { 
+                    p.resolve({ hex: event.data.signature }); 
+                } else if (event.data.signatures !== undefined) { 
+                    p.resolve({ result: event.data.signatures }); 
+                } else if (event.data.arraySignature !== undefined) { 
+                    p.resolve({ array: event.data.arraySignature }); 
+                } else if (event.data.cert !== undefined) { 
+                    p.resolve({ hex: event.data.cert }); 
+                } else if (event.data.signed !== undefined) { 
+                    p.resolve({ signed: event.data.signed }); 
+                } else if (event.data.response !== undefined) { 
+                    p.resolve({ response: event.data.response }); 
+                } else { 
+                    console.log("No idea how to handle message"); 
+                    console.log(event.data); 
+                } 
+                if (event.data.version !== undefined) { 
+                    p.resolve(event.data.extension + "/" + event.data.version); 
+                } 
+            } else { 
+                p.reject(new Error(event.data.result)); 
+            } 
+            delete _vss_declaration_promises[event.data.nonce]; 
+        } else { 
+            console.log("No nonce in event msg"); 
+        } 
+    } 
+}, false); 
+var vss_declaration = function vss_declaration() { 
+    "use strict"; 
+    var fields = {}; 
+    function nonce() { 
+        var val = ""; 
+        var hex = "abcdefghijklmnopqrstuvwxyz0123456789"; 
+        for (var i = 0; i < 16; i++) val += hex.charAt(Math.floor(Math.random() * hex.length)); 
+        return val; 
+    }; 
+    function messagePromise(msg) { 
+        return new Promise(function (resolve, reject) { 
+            msg["source"] = window.location.href; 
+            msg["destination"] = "chrome-extension://eoecackhakkjihfkdmfbafkckbgmfddk/"; 
+            msg["nonce"] = nonce(); 
+            msg["src"] = "page.js"; 
+            window.postMessage(msg, "*"); 
+            _vss_declaration_promises[msg.nonce] = { 
+                resolve: resolve, 
+                reject: reject 
+            }; 
+        }); 
+    }; 
+    fields.getCertificate = function () { 
+        var msg = { type: "CERT" }; 
+        return messagePromise(msg); 
+    }; 
+    fields.signsingle = function (cert, hash) { 
+        var msg = { type: "SIGN_REGISTRATION", cert: cert.hex, hex: hash.hex }; 
+        return messagePromise(msg); 
+    }; 
+    fields.signAndSend = function (cert, input) { 
+        var msg = { type: "SIGN_AND_SEND", cert: cert, json: input }; 
+        return messagePromise(msg); 
+    }; 
+    fields.signfilepdf = function (param, input) { 
+        var msg = { type: "SIGN_PDF", param: param, b64pdf: input }; 
+        return messagePromise(msg); 
+    }; 
+    fields.getVersion = function () { 
+        return messagePromise({ 
+            type: "VERSION" 
+        }); 
+    }; 
+    fields.scanner = function (param) { 
+        var msg = { type: "SCANNER", param: param }; 
+        return messagePromise(msg); 
+    }; 
+    return fields; 
+}(); 
+</script></head>
+<body style="">
+<h1>Parse JSON Exercise</h1>
+
+<main>
+    <form>
+        <label for="userId">UserID:
+            <input type="number" required="" id="userId">
+        </label>
+        <button type="submit" id="btnLoad">Load</button>
+    </form>
+
+    <section>
+        <h2>Posts</h2>
+        <hr>
+        <article>
+            <ul id="posts"></ul>
+        </article>
+
+    </section>
+</main>
+
+<script src="jquery-2.0.3.js"></script>
+<script src="script.js"></script>
+
+</body></html>
